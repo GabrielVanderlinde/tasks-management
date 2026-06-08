@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import { ProjectsRequestDto } from './projects.dto'
 import { ProjectsService } from './projects.service'
 
 @Controller({
@@ -19,12 +20,12 @@ export class ProjectsController {
   }
 
   @Post()
-  create(@Body() data: any) {
+  create(@Body() data: ProjectsRequestDto) {
     return this.projectsService.create(data)
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() data: any) {
+  update(@Param('id') id: string, @Body() data: ProjectsRequestDto) {
     return this.projectsService.update(id, data)
   }
 
