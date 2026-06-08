@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common'
 import { ProjectsRequestDto } from './projects.dto'
 import { ProjectsService } from './projects.service'
 
@@ -15,7 +15,7 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.projectsService.findById(id)
   }
 
@@ -25,12 +25,12 @@ export class ProjectsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() data: ProjectsRequestDto) {
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() data: ProjectsRequestDto) {
     return this.projectsService.update(id, data)
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.projectsService.remove(id)
   }
 }
