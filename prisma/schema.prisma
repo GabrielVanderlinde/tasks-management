@@ -13,5 +13,37 @@ model Project {
   name String
   description String?
   createAt DateTime @default(now())
-  updateAt DateTime @updateAt
+  updatedAt DateTime @updatedAt
+
+  //Relacionamento de Tabelas
+
+  task Task[]
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model Task {
+  id String @id @default(uuid())
+  title String
+  description String?
+  status TaskStatus @default(TODO)
+  priority TaskPriority @default(MEDIUM)
+  dueDate DateTime?
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //Relacionamento de Tabelas
+
+  project Project @relation(fields: [projectId], references: [id])
+  projectId String
 }
