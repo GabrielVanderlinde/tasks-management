@@ -11,9 +11,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common'
+import { ApiResponse } from '@nestjs/swagger'
 import { ProjectsListItemDTO, ProjectsRequestDto } from './projects.dto'
 import { ProjectsService } from './projects.service'
-import { ApiResponse } from '@nestjs/swagger'
 
 @Controller({
   version: '1',
