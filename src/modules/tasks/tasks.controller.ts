@@ -1,5 +1,17 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+} from '@nestjs/common'
 import { TasksService } from './tasks.service'
+import { TaskDto } from './tasks.dto'
 
 @Controller({
   version: '1',
@@ -14,7 +26,7 @@ export class TasksController {
   }
 
   @Post()
-  create(@Param('projectId', ParseUUIDPipe) projectId: string, @Body() data: any) {
+  create(@Param('projectId', ParseUUIDPipe) projectId: string, @Body() data: TaskDto) {
     return this.tasksService.create(projectId, data)
   }
 
@@ -30,12 +42,13 @@ export class TasksController {
   update(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('taskId', ParseUUIDPipe) taskId: string,
-    @Body() data: any,
+    @Body() data: TaskDto,
   ) {
     return this.tasksService.update(projectId, taskId, data)
   }
 
   @Delete(':taskId')
+  @HttpCode(HttpStatus.NO_CONTENT)
   delete(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('taskId', ParseUUIDPipe) taskId: string,
