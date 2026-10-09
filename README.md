@@ -1,30 +1,42 @@
-# Tasks Management
+# Tasks Management API
 
-API para gerenciamento de tarefas, desenvolvida com TypeScript e NestJS. O projeto explora organização modular, validação de dados e persistência com Prisma.
+API REST para gerenciamento de projetos e tarefas, desenvolvida com NestJS e TypeScript. O projeto utiliza Prisma para persistência de dados e PostgreSQL como banco de dados, com modelos de projetos, tarefas, status e prioridade.
+
+## Visão geral
+
+O objetivo é praticar a construção de APIs backend com arquitetura modular, validação de entradas, persistência relacional e separação de responsabilidades entre controllers, services e camada de dados.
 
 ## Tecnologias
 
 - Node.js
 - TypeScript
-- NestJS
-- Prisma
+- NestJS 11
+- Prisma 6
+- PostgreSQL
+- class-validator e class-transformer
+- Swagger
 - pnpm
-- Banco de dados configurado por variável de ambiente
+- Jest e Supertest
+- Biome
 
-## Funcionalidades documentadas
+## Funcionalidades
 
-- Criar, listar, consultar, atualizar e remover tarefas
-- Validar dados de entrada com DTOs
-- Organizar a aplicação em módulos, controllers e services
-- Persistir dados com Prisma
+- Gerenciamento de projetos e tarefas
+- Associação de tarefas a projetos
+- Status de tarefa: `TODO`, `IN_PROGRESS` e `DONE`
+- Prioridade: `LOW`, `MEDIUM` e `HIGH`
+- Descrição e data de vencimento opcionais
+- Identificadores UUID e datas de criação/atualização gerenciadas pelo banco/ORM
 
 ## Pré-requisitos
 
 - Node.js compatível com o projeto
 - pnpm
-- Banco de dados compatível com o schema Prisma
+- PostgreSQL em execução
 
-## Instalação
+Confira a versão do Node recomendada pelo projeto e instale o pnpm caso ainda não esteja disponível.
+
+## Instalação e execução
 
 ```bash
 git clone https://github.com/GabrielVanderlinde/tasks-management.git
@@ -32,36 +44,66 @@ cd tasks-management
 pnpm install
 ```
 
-Crie um arquivo `.env` na raiz e configure a variável `DATABASE_URL` conforme o banco definido em `prisma/schema.prisma`. Exemplo ilustrativo para PostgreSQL:
+Crie um arquivo `.env` na raiz do projeto:
 
 ```env
-DATABASE_URL="postgresql://usuario:senha@localhost:5432/tasks_db"
+DATABASE_URL="postgresql://USUARIO:SENHA@localhost:5432/tasks_db"
 PORT=3000
 ```
 
-Gere o cliente Prisma conforme a configuração do projeto e execute em modo de desenvolvimento:
+Crie previamente o banco `tasks_db` no PostgreSQL e substitua usuário e senha pelos valores do seu ambiente. A variável `DATABASE_URL` é exigida pelo schema do Prisma. Não publique credenciais reais.
+
+Gere o Prisma Client e inicie a aplicação:
 
 ```bash
 pnpm exec prisma generate
 pnpm run start:dev
 ```
 
+Para compilar para produção:
+
+```bash
+pnpm run build
+pnpm run start:prod
+```
+
 ## Endpoints
 
-Os caminhos abaixo representam as operações documentadas para tarefas; confirme os detalhes e parâmetros nos controllers da versão atual.
+As rotas disponíveis devem ser confirmadas nos controllers da versão atual. Para evitar documentar contratos incorretos, consulte a implementação antes de integrar um cliente. As operações previstas para a API são:
 
-| Método | Rota | Operação |
-| --- | --- | --- |
-| POST | `/tasks` | Criar tarefa |
-| GET | `/tasks` | Listar tarefas |
-| GET | `/tasks/:id` | Consultar tarefa |
-| PUT | `/tasks/:id` | Atualizar tarefa |
-| DELETE | `/tasks/:id` | Remover tarefa |
+| Recurso | Operações |
+| --- | --- |
+| Projetos | Criar, listar, consultar, atualizar e remover |
+| Tarefas | Criar, listar, consultar, atualizar e remover |
 
-## Objetivo
+A aplicação inclui a dependência do Swagger. Caso a documentação esteja habilitada no bootstrap, utilize a rota configurada no código para consultar os schemas, parâmetros e respostas reais.
 
-Projeto de estudo para aprofundar conhecimentos em NestJS, APIs REST, validação, Prisma e arquitetura backend.
+## Modelo de dados
+
+- **Project:** `id`, `name`, `description`, `createAt`, `updatedAt`
+- **Task:** `id`, `title`, `description`, `status`, `priority`, `dueDate`, `createAt`, `updatedAt`, `projectId`
+
+Cada tarefa está associada a um projeto. O schema define `TODO` como status padrão e `MEDIUM` como prioridade padrão.
+
+## Testes e qualidade
+
+```bash
+pnpm test
+pnpm test:e2e
+pnpm test:cov
+pnpm lint
+```
+
+Os comandos utilizam os scripts definidos no `package.json`. A execução efetiva depende das dependências instaladas e da configuração local.
+
+## Estrutura do projeto
+
+A aplicação segue a organização modular do NestJS. Os principais pontos para entender o fluxo são os módulos, controllers, services, DTOs e o schema em `prisma/schema.prisma`.
 
 ## Autor
 
-Gabriel Vanderlinde
+**Gabriel Vanderlinde** · [GitHub](https://github.com/GabrielVanderlinde)
+
+---
+
+Projeto de aprendizado contínuo em desenvolvimento backend, APIs REST e persistência de dados.
