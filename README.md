@@ -1,69 +1,30 @@
-# Tasks Management System
+# Tasks Management
 
-Task management application built with TypeScript and NestJS. The project focuses on backend architecture, clean code, and scalable API design.
+API para gerenciamento de tarefas, desenvolvida com TypeScript e NestJS. O projeto explora organização modular, validação de dados e persistência com Prisma.
 
-## Overview
+## Tecnologias
 
-This project implements task creation, update, listing, and deletion flows in a modular and maintainable structure. It is designed to study and apply professional NestJS development patterns, validation, and database integration.
-
-## Tech Stack
-
+- Node.js
 - TypeScript
 - NestJS
 - Prisma
-- Node.js
-- PostgreSQL or MySQL
 - pnpm
+- Banco de dados configurado por variável de ambiente
 
-## Features
+## Funcionalidades documentadas
 
-- Task creation
-- Task listing and filtering
-- Task updates
-- Task deletion
-- Task status tracking
-- Validation with DTOs
-- Data persistence with Prisma
-- Structured modular architecture
+- Criar, listar, consultar, atualizar e remover tarefas
+- Validar dados de entrada com DTOs
+- Organizar a aplicação em módulos, controllers e services
+- Persistir dados com Prisma
 
-## Project Structure
+## Pré-requisitos
 
-```text
-src/
-├── app.module.ts
-├── main.ts
-├── tasks/
-│   ├── dto/
-│   ├── entities/
-│   ├── tasks.controller.ts
-│   ├── tasks.module.ts
-│   └── tasks.service.ts
-└── prisma/
-```
-
-## Architecture
-
-The application follows a layered approach:
-
-```text
-HTTP Request
-  ↓
-Controller
-  ↓
-Service
-  ↓
-Prisma / Database
-```
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
+- Node.js compatível com o projeto
 - pnpm
-- Database (PostgreSQL or MySQL)
+- Banco de dados compatível com o schema Prisma
 
-### Installation
+## Instalação
 
 ```bash
 git clone https://github.com/GabrielVanderlinde/tasks-management.git
@@ -71,47 +32,36 @@ cd tasks-management
 pnpm install
 ```
 
-### Environment configuration
-
-Create a `.env` file:
+Crie um arquivo `.env` na raiz e configure a variável `DATABASE_URL` conforme o banco definido em `prisma/schema.prisma`. Exemplo ilustrativo para PostgreSQL:
 
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/tasks_db"
+DATABASE_URL="postgresql://usuario:senha@localhost:5432/tasks_db"
 PORT=3000
 ```
 
-### Run the application
+Gere o cliente Prisma conforme a configuração do projeto e execute em modo de desenvolvimento:
 
 ```bash
+pnpm exec prisma generate
 pnpm run start:dev
 ```
 
-## API Endpoints
+## Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/tasks` | Create task |
-| GET | `/tasks` | List tasks |
-| GET | `/tasks/:id` | Get task by ID |
-| PUT | `/tasks/:id` | Update task |
-| DELETE | `/tasks/:id` | Delete task |
+Os caminhos abaixo representam as operações documentadas para tarefas; confirme os detalhes e parâmetros nos controllers da versão atual.
 
-## Best Practices Applied
+| Método | Rota | Operação |
+| --- | --- | --- |
+| POST | `/tasks` | Criar tarefa |
+| GET | `/tasks` | Listar tarefas |
+| GET | `/tasks/:id` | Consultar tarefa |
+| PUT | `/tasks/:id` | Atualizar tarefa |
+| DELETE | `/tasks/:id` | Remover tarefa |
 
-- Clear separation between controller, service, and data access
-- DTO validation
-- Use of environment variables
-- Clean code organization
-- Maintainable NestJS module structure
+## Objetivo
 
-## Development Notes
+Projeto de estudo para aprofundar conhecimentos em NestJS, APIs REST, validação, Prisma e arquitetura backend.
 
-This project is part of a study path focused on learning NestJS, TypeScript backend development, and software design patterns.
-
-## License
-
-MIT
-
-## Author
+## Autor
 
 Gabriel Vanderlinde
